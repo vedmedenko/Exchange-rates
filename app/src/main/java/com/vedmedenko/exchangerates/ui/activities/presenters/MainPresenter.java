@@ -63,7 +63,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
                 switch (type) {
                     case "Current":
-                        getMvpView().refreshCurrentCurrency();
+                        getMvpView().refreshPage(0);
                     default:
                 }
             }

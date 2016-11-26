@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.vedmedenko.exchangerates.R;
 import com.vedmedenko.exchangerates.ui.activities.base.BaseActivity;
@@ -15,26 +16,21 @@ import com.vedmedenko.exchangerates.ui.activities.presenters.MainPresenter;
 import com.vedmedenko.exchangerates.ui.activities.settings.SettingsActivity;
 import com.vedmedenko.exchangerates.ui.activities.views.MainMvpView;
 import com.vedmedenko.exchangerates.ui.adapters.FragmentAdapter;
-import com.vedmedenko.exchangerates.ui.fragments.CurrentRatesFragment;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
-public class MainActivity extends BaseActivity implements MainMvpView, ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseActivity implements MainMvpView {
 
     // Views Binding
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
-    @BindView(R.id.tabs)
-    TabLayout tabs;
+    @BindView(R.id.tabs) TabLayout tabs;
 
-    @BindView(R.id.viewpager)
-    ViewPager viewPager;
+    @BindView(R.id.viewpager) ViewPager viewPager;
 
     // Injection
 
@@ -43,6 +39,8 @@ public class MainActivity extends BaseActivity implements MainMvpView, ViewPager
 
     @Inject
     MainPresenter presenter;
+
+    private ViewPager.OnPageChangeListener viewPagerOnPageChangeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +59,34 @@ public class MainActivity extends BaseActivity implements MainMvpView, ViewPager
     protected void onDestroy() {
         super.onDestroy();
         presenter.detach();
+        viewPagerOnPageChangeListener = null;
     }
 
     private void setupViewPager(ViewPager viewPager) {
         viewPager.setAdapter(fragmentAdapter);
         tabs.setupWithViewPager(viewPager);
-        viewPager.addOnPageChangeListener(this);
+
+        viewPagerOnPageChangeListener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Fragment fragment = fragmentAdapter.getFragment(position);
+
+                if (fragment != null) {
+                    fragment.onResume();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        };
+        viewPager.addOnPageChangeListener(viewPagerOnPageChangeListener);
     }
 
     @Override
@@ -87,32 +107,13 @@ public class MainActivity extends BaseActivity implements MainMvpView, ViewPager
     }
 
     @Override
-    public void refreshCurrentCurrency() {
-        if (tabs.getSelectedTabPosition() == 0) {
-            onPageSelected(0);
+    public void refreshPage(int page) {
+        if (tabs.getSelectedTabPosition() == page) {
+            viewPagerOnPageChangeListener.onPageSelected(page);
         }
     }
 
     public MainPresenter getPresenter() {
         return presenter;
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        Fragment fragment = fragmentAdapter.getFragment(position);
-
-        if (fragment != null) {
-            fragment.onResume();
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 }

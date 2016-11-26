@@ -40,7 +40,6 @@ public class CurrentRatesFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentComponent().inject(this);
 
         eur = getArguments().getString(ConstantsManager.EXTRA_CURRENCY_EUR);
         rur = getArguments().getString(ConstantsManager.EXTRA_CURRENCY_RUR);
