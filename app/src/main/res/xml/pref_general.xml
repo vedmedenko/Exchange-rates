@@ -1,0 +1,8 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.vedmedenko.exchangerates.core.storage.TimePreference
+        android:defaultValue="9:00"
+        android:key="sync_time"
+        android:title="@string/pref_title_sync_time" />
+
+</PreferenceScreen>
