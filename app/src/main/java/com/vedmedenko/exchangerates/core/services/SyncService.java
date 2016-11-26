@@ -12,6 +12,7 @@ import com.vedmedenko.exchangerates.core.rest.models.current.CurrentRate;
 import com.vedmedenko.exchangerates.injection.ActivityContext;
 import com.vedmedenko.exchangerates.utils.AlarmUtils;
 import com.vedmedenko.exchangerates.utils.ConstantsManager;
+import com.vedmedenko.exchangerates.utils.NotificationUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -63,8 +64,7 @@ public class SyncService extends IntentService {
         final boolean returnData = extras.getBoolean(ConstantsManager.EXTRA_BOOLEAN);
         final boolean alarm = extras.getBoolean(ConstantsManager.EXTRA_BOOLEAN_ALARM);
 
-        Timber.d("Service fired: " + count);
-        count++;
+        Timber.d("Service fired: " + (++count));
 
         if (alarm)
             Timber.d("Service fired from alarm!");
@@ -95,6 +95,7 @@ public class SyncService extends IntentService {
                         sendBroadcast(broadcast);
                     }
 
+                    NotificationUtils.notifyCurrentCurrencyLoaded(this);
                     AlarmUtils.cancelRepeatingAlarm(this);
                 }, throwable -> {
                     Timber.e(throwable, "Error while loading data occurred!");
