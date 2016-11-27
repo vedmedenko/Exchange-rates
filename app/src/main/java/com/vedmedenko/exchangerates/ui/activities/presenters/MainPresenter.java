@@ -73,6 +73,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                         getMvpView().refreshPage(0);
                         return;
                     case "Date":
+
                         ArrayList<String> eur = extras.
                                 getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_EUR);
                         ArrayList<String> rur = extras.

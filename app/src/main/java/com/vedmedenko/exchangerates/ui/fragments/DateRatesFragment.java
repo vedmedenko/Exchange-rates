@@ -101,20 +101,28 @@ public class DateRatesFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-        if (eur != null) {
-            tv_click_request.setText(date_label);
+        tv_click_request.setText(date_label);
 
-            tv_nbu_eur.setText(getString(R.string.nbu_string, eur.get(0), eur.get(1)));
-            tv_pb_eur.setText(getString(R.string.pb_string, eur.get(2), eur.get(3)));
-
-            tv_nbu_rur.setText(getString(R.string.nbu_string, rur.get(0), rur.get(1)));
-            tv_pb_rur.setText(getString(R.string.pb_string, rur.get(2), rur.get(3)));
-
-            tv_nbu_usd.setText(getString(R.string.nbu_string, usd.get(0), usd.get(1)));
-            tv_pb_usd.setText(getString(R.string.pb_string, usd.get(2), usd.get(3)));
-        } else {
+        if (eur == null && rur == null && usd == null) {
             tv_click_request.setText(getString(R.string.click_to_make_a_request));
             showTvs(false);
+        } else {
+            showTvs(true);
+        }
+
+        if (eur != null) {
+            tv_nbu_eur.setText(getString(R.string.nbu_string, eur.get(0), eur.get(1)));
+            tv_pb_eur.setText(getString(R.string.pb_string, eur.get(2), eur.get(3)));
+        }
+
+        if (rur != null) {
+            tv_nbu_rur.setText(getString(R.string.nbu_string, rur.get(0), rur.get(1)));
+            tv_pb_rur.setText(getString(R.string.pb_string, rur.get(2), rur.get(3)));
+        }
+
+        if (usd != null) {
+            tv_nbu_usd.setText(getString(R.string.nbu_string, usd.get(0), usd.get(1)));
+            tv_pb_usd.setText(getString(R.string.pb_string, usd.get(2), usd.get(3)));
         }
     }
 

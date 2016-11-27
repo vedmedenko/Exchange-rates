@@ -32,7 +32,8 @@
         android:id="@+id/tv_nbu_eur"
         android:layout_below="@+id/tv_label_eur"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,7 +41,8 @@
         android:id="@+id/tv_pb_eur"
         android:layout_below="@+id/tv_nbu_eur"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:text="@string/rur"
@@ -58,7 +60,8 @@
         android:id="@+id/tv_nbu_rur"
         android:layout_below="@+id/tv_label_rur"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,7 +69,8 @@
         android:id="@+id/tv_pb_rur"
         android:layout_below="@+id/tv_nbu_rur"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:text="@string/usd"
@@ -84,7 +88,8 @@
         android:id="@+id/tv_nbu_usd"
         android:layout_below="@+id/tv_label_usd"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:textColor="@android:color/white"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -92,6 +97,7 @@
         android:id="@+id/tv_pb_usd"
         android:layout_below="@+id/tv_nbu_usd"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:textColor="@android:color/white"/>
 
 </RelativeLayout>

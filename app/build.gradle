@@ -37,6 +37,7 @@ dependencies {
     final RX_JAVA_VERSION = '1.1.6'
     final BUTTERKNIFE_VERSION = '8.0.1'
     final LEAKCANARY_VERSION = '1.4'
+    final MPANDROID_CHART_VERSION = 'v3.0.1'
     final TIMBER_VERISON = '4.3.0'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -66,6 +67,8 @@ dependencies {
 
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     apt "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
+
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 
     compile "com.jakewharton.timber:timber:$TIMBER_VERISON"
 

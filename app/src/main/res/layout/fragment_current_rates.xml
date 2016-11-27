@@ -6,14 +6,34 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:text="@string/eur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_label_eur"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/tv_label_rur"
+        android:layout_alignStart="@+id/tv_label_rur"
+        android:layout_marginTop="150dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_eur"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_below="@+id/tv_label_eur"
+        android:layout_centerInParent="true"/>
+
+    <TextView
         android:text="@string/rur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:id="@+id/tv_label_rur"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:layout_marginTop="@dimen/curr_rates_vertical_margin"/>
+        android:layout_below="@+id/tv_eur"
+        android:layout_alignLeft="@+id/tv_label_usd"
+        android:layout_alignStart="@+id/tv_label_usd"
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,23 +42,6 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/tv_rur"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/tv_label_rur"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/tv_eur"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
-
-    <TextView
-        android:text="@string/eur"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/tv_eur"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/tv_label_eur"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
     <TextView
         android:text="@string/usd"
@@ -57,5 +60,7 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/tv_usd"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+
 
 </RelativeLayout>
