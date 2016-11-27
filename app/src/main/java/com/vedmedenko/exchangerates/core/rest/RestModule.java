@@ -11,6 +11,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+
+import com.vedmedenko.exchangerates.core.rest.converters.RetrofitUniversalConverter;
 import com.vedmedenko.exchangerates.utils.ConstantsManager;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -46,12 +48,12 @@ public class RestModule {
 
     @Provides
     @Singleton
-    public Retrofit providesRetrofit(@NonNull OkHttpClient okHttpClient, @NonNull Gson gson) {
+    public Retrofit providesRetrofit(@NonNull OkHttpClient okHttpClient,
+                                     @NonNull RetrofitUniversalConverter converter) {
         return new Retrofit.Builder()
                 .baseUrl(ConstantsManager.BASE_URL)
                 .client(okHttpClient)
-                .addConverterFactory(SimpleXmlConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(converter)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
     }
