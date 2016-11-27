@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.vedmedenko.exchangerates.R;
 import com.vedmedenko.exchangerates.ui.activities.base.BaseActivity;
@@ -17,6 +16,7 @@ import com.vedmedenko.exchangerates.ui.activities.presenters.MainPresenter;
 import com.vedmedenko.exchangerates.ui.activities.settings.SettingsActivity;
 import com.vedmedenko.exchangerates.ui.activities.views.MainMvpView;
 import com.vedmedenko.exchangerates.ui.adapters.FragmentAdapter;
+import com.vedmedenko.exchangerates.ui.fragments.ChartsFragment;
 import com.vedmedenko.exchangerates.ui.fragments.DateRatesFragment;
 
 import java.util.ArrayList;
@@ -25,7 +25,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements MainMvpView {
 
@@ -123,7 +122,16 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         ((DateRatesFragment) fragmentAdapter.getFragment(1)).setStrings(eur, rur, usd);
     }
 
+    @Override
+    public void setChartData(@NonNull ArrayList<String> eur, @NonNull ArrayList<String> usd) {
+        ((ChartsFragment) fragmentAdapter.getFragment(2)).setChartData(eur, usd);
+    }
+
     public MainPresenter getPresenter() {
         return presenter;
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 }

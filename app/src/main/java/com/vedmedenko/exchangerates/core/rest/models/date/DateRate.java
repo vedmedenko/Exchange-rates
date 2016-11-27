@@ -4,10 +4,10 @@ public class DateRate {
 
     private String baseCurrency;
     private String currency;
-    private Double saleRateNB;
-    private Double purchaseRateNB;
-    private Double saleRate;
-    private Double purchaseRate;
+    private Float saleRateNB;
+    private Float purchaseRateNB;
+    private Float saleRate;
+    private Float purchaseRate;
 
     public String getBaseCurrency() {
         return baseCurrency;
@@ -25,35 +25,35 @@ public class DateRate {
         this.currency = currency;
     }
 
-    public Double getSaleRateNB() {
+    public Float getSaleRateNB() {
         return saleRateNB;
     }
 
-    public void setSaleRateNB(Double saleRateNB) {
+    public void setSaleRateNB(Float saleRateNB) {
         this.saleRateNB = saleRateNB;
     }
 
-    public Double getPurchaseRateNB() {
+    public Float getPurchaseRateNB() {
         return purchaseRateNB;
     }
 
-    public void setPurchaseRateNB(Double purchaseRateNB) {
+    public void setPurchaseRateNB(Float purchaseRateNB) {
         this.purchaseRateNB = purchaseRateNB;
     }
 
-    public Double getSaleRate() {
+    public Float getSaleRate() {
         return saleRate;
     }
 
-    public void setSaleRate(Double saleRate) {
+    public void setSaleRate(Float saleRate) {
         this.saleRate = saleRate;
     }
 
-    public Double getPurchaseRate() {
+    public Float getPurchaseRate() {
         return purchaseRate;
     }
 
-    public void setPurchaseRate(Double purchaseRate) {
+    public void setPurchaseRate(Float purchaseRate) {
         this.purchaseRate = purchaseRate;
     }
 }

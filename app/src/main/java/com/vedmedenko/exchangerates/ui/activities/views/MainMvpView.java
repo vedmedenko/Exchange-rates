@@ -11,4 +11,5 @@ public interface MainMvpView extends MvpView {
     void setDateCurrencies(@NonNull ArrayList<String> eur,
                            @NonNull ArrayList<String> rur,
                            @NonNull ArrayList<String> usd);
+    void setChartData(@NonNull ArrayList<String> eur, @NonNull ArrayList<String> usd);
 }

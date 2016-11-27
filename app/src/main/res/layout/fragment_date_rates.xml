@@ -33,7 +33,8 @@
         android:layout_below="@+id/tv_label_eur"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,7 +43,8 @@
         android:layout_below="@+id/tv_nbu_eur"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <TextView
         android:text="@string/rur"
@@ -61,7 +63,8 @@
         android:layout_below="@+id/tv_label_rur"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,7 +73,8 @@
         android:layout_below="@+id/tv_nbu_rur"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <TextView
         android:text="@string/usd"
@@ -89,7 +93,8 @@
         android:layout_below="@+id/tv_label_usd"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -98,6 +103,7 @@
         android:layout_below="@+id/tv_nbu_usd"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
 </RelativeLayout>

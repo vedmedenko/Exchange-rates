@@ -11,8 +11,15 @@ import com.vedmedenko.exchangerates.R;
 import com.vedmedenko.exchangerates.ui.activities.MainActivity;
 import com.vedmedenko.exchangerates.utils.ConstantsManager;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class CurrentRatesFragment extends BaseFragment {
 

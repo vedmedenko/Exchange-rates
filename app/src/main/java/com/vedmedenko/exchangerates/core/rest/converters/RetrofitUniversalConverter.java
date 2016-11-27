@@ -30,12 +30,14 @@ public class RetrofitUniversalConverter extends Converter.Factory {
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
 
-        if (type.toString().contains("CurrentRates")) {
-            return xml.responseBodyConverter(type, annotations, retrofit);
-        }
+        for (Annotation annotation : annotations) {
+            if (annotation.annotationType() == Xml.class) {
+                return xml.responseBodyConverter(type, annotations, retrofit);
+            }
 
-        if (type.toString().contains("DateRates")) {
-            return json.responseBodyConverter(type, annotations, retrofit);
+            if (annotation.annotationType() == Json.class) {
+                return json.responseBodyConverter(type, annotations, retrofit);
+            }
         }
 
         return null;

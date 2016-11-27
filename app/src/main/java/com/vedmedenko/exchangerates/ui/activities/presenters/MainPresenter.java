@@ -13,9 +13,15 @@ import com.vedmedenko.exchangerates.core.services.SyncService;
 import com.vedmedenko.exchangerates.injection.ActivityContext;
 import com.vedmedenko.exchangerates.ui.activities.base.BasePresenter;
 import com.vedmedenko.exchangerates.ui.activities.views.MainMvpView;
+import com.vedmedenko.exchangerates.ui.fragments.ChartsFragment;
 import com.vedmedenko.exchangerates.utils.ConstantsManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -54,7 +60,13 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
     }
 
     public void loadDateCurrency(@NonNull String date) {
-        context.startService(DateCurrencyService.getStartIntent(context, date));
+        context.startService(DateCurrencyService.getStartIntent(context, date, true));
+    }
+
+    public void loadChartData(@NonNull String date) {
+        context.startService(DateCurrencyService.getStartIntent(context,
+                date,
+                false));
     }
 
     private void registerReciever() {
@@ -67,23 +79,33 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
                 if (type == null)
                     return;
+                ArrayList<String> eur, usd;
 
                 switch (type) {
                     case "Current":
                         getMvpView().refreshPage(0);
                         return;
                     case "Date":
-
-                        ArrayList<String> eur = extras.
+                        eur = extras.
                                 getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_EUR);
                         ArrayList<String> rur = extras.
                                 getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_RUR);
-                        ArrayList<String> usd = extras.
+                        usd = extras.
                                 getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_USD);
 
                         getMvpView().setDateCurrencies(eur, rur, usd);
 
                         getMvpView().refreshPage(1);
+                        return;
+                    case "DateNotOneShot":
+                        eur = extras.
+                                getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_EUR);
+                        usd = extras.
+                                getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_USD);
+
+                        getMvpView().setChartData(eur, usd);
+
+                        getMvpView().refreshPage(2);
                     default:
                 }
             }

@@ -19,7 +19,6 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class DateRatesFragment extends BaseFragment {
 

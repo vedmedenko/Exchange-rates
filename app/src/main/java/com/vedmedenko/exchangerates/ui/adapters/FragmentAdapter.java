@@ -48,8 +48,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             case 1:
                 return DateRatesFragment.newInstance();
             case 2:
-                ChartsFragment tab3 = new ChartsFragment();
-                return tab3;
+                return ChartsFragment.newInstance();
             default:
                 return null;
         }
@@ -81,6 +80,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             fragmentTags.put(position, ((CurrentRatesFragment) object).getTag());
         if (object instanceof DateRatesFragment)
             fragmentTags.put(position, ((DateRatesFragment) object).getTag());
+        if (object instanceof ChartsFragment)
+            fragmentTags.put(position, ((ChartsFragment) object).getTag());
         return object;
     }
 
