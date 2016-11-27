@@ -32,7 +32,10 @@
                 android:value="com.vedmedenko.exchangerates.ui.activities.MainActivity" />
         </activity>
 
-        <service android:name=".core.services.SyncService" />
+        <service android:name=".core.services.SyncService"
+            android:enabled="true"/>
+        <service android:name=".core.services.DateCurrencyService"
+            android:enabled="true"/>
 
         <receiver android:name=".core.receivers.BootReceiver">
             <intent-filter>

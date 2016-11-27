@@ -1,10 +1,12 @@
 package com.vedmedenko.exchangerates.core.services;
 
-import android.app.IntentService;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.vedmedenko.exchangerates.ExchangeRatesApplication;
 import com.vedmedenko.exchangerates.core.DataManager;
@@ -23,7 +25,7 @@ import rx.Subscription;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class SyncService extends IntentService {
+public class SyncService extends Service {
 
     @Inject
     DataManager dataManager;
@@ -41,10 +43,6 @@ public class SyncService extends IntentService {
         return intent;
     }
 
-    public SyncService() {
-        super("Sync service thread");
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -58,8 +56,14 @@ public class SyncService extends IntentService {
             subscription.unsubscribe();
     }
 
+    @Nullable
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
         Bundle extras = intent.getExtras();
         final boolean returnData = extras.getBoolean(ConstantsManager.EXTRA_BOOLEAN);
         final boolean alarm = extras.getBoolean(ConstantsManager.EXTRA_BOOLEAN_ALARM);
@@ -72,8 +76,7 @@ public class SyncService extends IntentService {
         if (!dataManager.currentCurrencyLoaded() && !AlarmUtils.isRepeatingAlarmSet())
             AlarmUtils.setupRepeatingAlarm(this);
 
-        if (subscription != null)
-            subscription.unsubscribe();
+        //Toast.makeText(this, R.string.sync_hint, Toast.LENGTH_LONG).show();
 
         subscription = dataManager.loadCurrentRates()
                 .subscribeOn(Schedulers.io())
@@ -100,5 +103,7 @@ public class SyncService extends IntentService {
                 }, throwable -> {
                     Timber.e(throwable, "Error while loading data occurred!");
                 });
+
+        return START_STICKY;
     }
 }

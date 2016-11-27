@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import com.vedmedenko.exchangerates.core.rest.PrivatbankApi;
 import com.vedmedenko.exchangerates.core.rest.RestModule;
+import com.vedmedenko.exchangerates.core.services.DateCurrencyService;
 import com.vedmedenko.exchangerates.core.services.SyncService;
 import com.vedmedenko.exchangerates.injection.ApplicationContext;
 import com.vedmedenko.exchangerates.injection.modules.ApplicationModule;
@@ -18,6 +19,7 @@ import com.vedmedenko.exchangerates.injection.modules.ApplicationModule;
 public interface ApplicationComponent {
 
     void inject(SyncService service);
+    void inject(DateCurrencyService service);
 
     @ApplicationContext
     Context context();

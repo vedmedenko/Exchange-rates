@@ -5,11 +5,20 @@
 
     <string name="title_activity_settings">Settings</string>
 
-    <string name="menuSettingsTitle">Settings</string>
+    <string name="menu_settings_title">Settings</string>
+
+    <string name="error_no_internet">No internet connection!</string>
+    <string name="error_no_data">No data for this date!</string>
 
     <string name="eur">EUR</string>
     <string name="rur">RUR</string>
     <string name="usd">USD</string>
+
+    <string name="sync_hint">Trying to download current currencies&#8230;</string>
+    <string name="click_to_make_a_request">Click to make a request</string>
+
+    <string name="nbu_string">NBU: %1$s, %2$s</string>
+    <string name="pb_string">PB: %1$s, %2$s</string>
 
     <!-- Strings related to Settings -->
 

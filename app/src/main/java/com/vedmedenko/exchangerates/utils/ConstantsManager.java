@@ -4,10 +4,6 @@ public final class ConstantsManager {
 
     public static final String CURRENT_CURRENCY_DEFAULT_VALUE = "0.00";
 
-    // Alarms
-
-    public static final int REPEATING_ALARM_REPEAT_TIME_SECONDS = 20;
-
     // Broadcast constants
 
     public static final String BROADCAST = "com.vedmedenko.exchangerates.BROADCAST";
@@ -15,6 +11,10 @@ public final class ConstantsManager {
     public static final String EXTRA_BOOLEAN = "com.vedmedenko.exchangerates.EXTRA_BOOLEAN";
     public static final String EXTRA_BOOLEAN_ALARM = "com.vedmedenko.exchangerates.EXTRA_BOOLEAN_ALARM";
     public static final String EXTRA_TYPE = "com.vedmedenko.exchangerates.EXTRA_TYPE";
+    public static final String EXTRA_STRING_DATE = "com.vedmedenko.exchangerates.EXTRA_STRING_DATE";
+    public static final String EXTRA_ARRAYLIST_DATE_RATES_EUR = "com.vedmedenko.exchangerates.EXTRA_ARRAYLIST_DATE_RATES_EUR";
+    public static final String EXTRA_ARRAYLIST_DATE_RATES_RUR = "com.vedmedenko.exchangerates.EXTRA_ARRAYLIST_DATE_RATES_RUR";
+    public static final String EXTRA_ARRAYLIST_DATE_RATES_USD = "com.vedmedenko.exchangerates.EXTRA_ARRAYLIST_DATE_RATES_USD";
     public static final String EXTRA_CURRENCY_EUR = "com.vedmedenko.exchangerates.EXTRA_CURRENCY_EUR";
     public static final String EXTRA_CURRENCY_RUR = "com.vedmedenko.exchangerates.EXTRA_CURRENCY_RUR";
     public static final String EXTRA_CURRENCY_USD = "com.vedmedenko.exchangerates.EXTRA_CURRENCY_USD";
@@ -25,9 +25,9 @@ public final class ConstantsManager {
     public static final String PREFERENCE_CURRENT_RUR = "com.vedmedenko.exchangerates.PREFERENCE_CURRENT_RUR";
     public static final String PREFERENCE_CURRENT_USD = "com.vedmedenko.exchangerates.PREFERENCE_CURRENT_USD";
 
-    // Service constants
+    // Service & Alarms constants
 
-    public static final int SYNC_TIME_OUT = 2 * 1000;
+    public static final int REPEATING_ALARM_REPEAT_TIME_SECONDS = 20;
 
     // Retrofit constants.
 

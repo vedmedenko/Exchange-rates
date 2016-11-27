@@ -2,6 +2,7 @@ package com.vedmedenko.exchangerates.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,9 @@ import com.vedmedenko.exchangerates.ui.activities.presenters.MainPresenter;
 import com.vedmedenko.exchangerates.ui.activities.settings.SettingsActivity;
 import com.vedmedenko.exchangerates.ui.activities.views.MainMvpView;
 import com.vedmedenko.exchangerates.ui.adapters.FragmentAdapter;
+import com.vedmedenko.exchangerates.ui.fragments.DateRatesFragment;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -111,6 +115,11 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         if (tabs.getSelectedTabPosition() == page) {
             viewPagerOnPageChangeListener.onPageSelected(page);
         }
+    }
+
+    @Override
+    public void setDateCurrencies(@NonNull ArrayList<String> eur, @NonNull ArrayList<String> rur, @NonNull ArrayList<String> usd) {
+        ((DateRatesFragment) fragmentAdapter.getFragment(1)).setStrings(eur, rur, usd);
     }
 
     public MainPresenter getPresenter() {

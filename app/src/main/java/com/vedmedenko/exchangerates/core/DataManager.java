@@ -31,7 +31,7 @@ public class DataManager {
 
     @NonNull
     public Observable<DateRates> loadDateRates(@NonNull String date) {
-        return privatbankApi.loadDateRates(date);
+        return privatbankApi.loadDateRates(true, date);
     }
 
     public boolean currentCurrencyLoaded() {

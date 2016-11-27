@@ -58,7 +58,7 @@ public class RestModule {
 
     @Provides
     @Singleton
-    public PrivatbankApi providesKinopoiskApi(@NonNull Retrofit retrofit) {
+    public PrivatbankApi providesPrivatbankApi(@NonNull Retrofit retrofit) {
         return retrofit.create(PrivatbankApi.class);
     }
 }

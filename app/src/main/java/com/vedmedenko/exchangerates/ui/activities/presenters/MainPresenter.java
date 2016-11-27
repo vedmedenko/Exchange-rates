@@ -8,11 +8,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.vedmedenko.exchangerates.core.DataManager;
+import com.vedmedenko.exchangerates.core.services.DateCurrencyService;
 import com.vedmedenko.exchangerates.core.services.SyncService;
 import com.vedmedenko.exchangerates.injection.ActivityContext;
 import com.vedmedenko.exchangerates.ui.activities.base.BasePresenter;
 import com.vedmedenko.exchangerates.ui.activities.views.MainMvpView;
 import com.vedmedenko.exchangerates.utils.ConstantsManager;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -50,6 +53,10 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         return dataManager.getCurrentCurrency();
     }
 
+    public void loadDateCurrency(@NonNull String date) {
+        context.startService(DateCurrencyService.getStartIntent(context, date));
+    }
+
     private void registerReciever() {
         broadcastReceiver = new BroadcastReceiver() {
             public void onReceive(Context context, Intent intent) {
@@ -64,6 +71,18 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                 switch (type) {
                     case "Current":
                         getMvpView().refreshPage(0);
+                        return;
+                    case "Date":
+                        ArrayList<String> eur = extras.
+                                getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_EUR);
+                        ArrayList<String> rur = extras.
+                                getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_RUR);
+                        ArrayList<String> usd = extras.
+                                getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_USD);
+
+                        getMvpView().setDateCurrencies(eur, rur, usd);
+
+                        getMvpView().refreshPage(1);
                     default:
                 }
             }

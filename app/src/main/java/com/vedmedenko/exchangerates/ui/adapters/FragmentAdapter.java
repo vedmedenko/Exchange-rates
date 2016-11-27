@@ -46,8 +46,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             case 0:
                 return CurrentRatesFragment.newInstance(((MainActivity) context).getPresenter().getCurrentCurrency());
             case 1:
-                DateRatesFragment tab2 = new DateRatesFragment();
-                return tab2;
+                return DateRatesFragment.newInstance();
             case 2:
                 ChartsFragment tab3 = new ChartsFragment();
                 return tab3;
@@ -80,6 +79,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         Object object = super.instantiateItem(container, position);
         if (object instanceof CurrentRatesFragment)
             fragmentTags.put(position, ((CurrentRatesFragment) object).getTag());
+        if (object instanceof DateRatesFragment)
+            fragmentTags.put(position, ((DateRatesFragment) object).getTag());
         return object;
     }
 
