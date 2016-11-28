@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +23,14 @@ import butterknife.ButterKnife;
 
 public class DateRatesFragment extends BaseFragment {
 
+    @BindView(R.id.card_button)
+    CardView cardButton;
+
     @BindView(R.id.tv_click_request) TextView tv_click_request;
 
+
+    @BindView(R.id.card_eur)
+    CardView cardEur;
 
     @BindView(R.id.tv_label_eur) TextView tv_eur;
 
@@ -32,12 +39,18 @@ public class DateRatesFragment extends BaseFragment {
     @BindView(R.id.tv_pb_eur) TextView tv_pb_eur;
 
 
+    @BindView(R.id.card_rur)
+    CardView cardRur;
+
     @BindView(R.id.tv_label_rur) TextView tv_rur;
 
     @BindView(R.id.tv_nbu_rur) TextView tv_nbu_rur;
 
     @BindView(R.id.tv_pb_rur) TextView tv_pb_rur;
 
+
+    @BindView(R.id.card_usd)
+    CardView cardUsd;
 
     @BindView(R.id.tv_label_usd) TextView tv_usd;
 
@@ -62,7 +75,7 @@ public class DateRatesFragment extends BaseFragment {
 
         final Context context = getContext();
 
-        tv_click_request.setOnClickListener((view -> {
+        cardButton.setOnClickListener((view -> {
             Calendar c = Calendar.getInstance();
             final int year = c.get(Calendar.YEAR);
             final int month = c.get(Calendar.MONTH) + 1;
@@ -87,6 +100,7 @@ public class DateRatesFragment extends BaseFragment {
                     ((MainActivity) getContext()).getPresenter().loadDateCurrency(date);
                 } else {
                     showHint(R.string.error_no_internet);
+                    tv_click_request.setText(getString(R.string.click_to_make_a_request));
                 }
             }, year, month - 1, day).show();
         }));
@@ -133,36 +147,26 @@ public class DateRatesFragment extends BaseFragment {
         this.usd = usd;
     }
 
-    private void showHint(@StringRes int res) {
-        tv_nbu_eur.setText(getString(res));
-        tv_nbu_eur.setVisibility(View.VISIBLE);
+    public void showHint(@StringRes int res) {
+        tv_eur.setText(getString(res));
+        cardEur.setVisibility(View.VISIBLE);
+        tv_nbu_eur.setVisibility(View.GONE);
+        tv_pb_eur.setVisibility(View.GONE);
     }
 
     private void showTvs(boolean show) {
         if (show) {
-            tv_eur.setVisibility(View.VISIBLE);
+            cardEur.setVisibility(View.VISIBLE);
+            tv_eur.setText(getString(R.string.eur));
             tv_nbu_eur.setVisibility(View.VISIBLE);
             tv_pb_eur.setVisibility(View.VISIBLE);
 
-            tv_rur.setVisibility(View.VISIBLE);
-            tv_nbu_rur.setVisibility(View.VISIBLE);
-            tv_pb_rur.setVisibility(View.VISIBLE);
-
-            tv_usd.setVisibility(View.VISIBLE);
-            tv_nbu_usd.setVisibility(View.VISIBLE);
-            tv_pb_usd.setVisibility(View.VISIBLE);
+            cardRur.setVisibility(View.VISIBLE);
+            cardUsd.setVisibility(View.VISIBLE);
         } else {
-            tv_eur.setVisibility(View.GONE);
-            tv_nbu_eur.setVisibility(View.GONE);
-            tv_pb_eur.setVisibility(View.GONE);
-
-            tv_rur.setVisibility(View.GONE);
-            tv_nbu_rur.setVisibility(View.GONE);
-            tv_pb_rur.setVisibility(View.GONE);
-
-            tv_usd.setVisibility(View.GONE);
-            tv_nbu_usd.setVisibility(View.GONE);
-            tv_pb_usd.setVisibility(View.GONE);
+            cardEur.setVisibility(View.GONE);
+            cardRur.setVisibility(View.GONE);
+            cardUsd.setVisibility(View.GONE);
         }
     }
 

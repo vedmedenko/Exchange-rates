@@ -20,6 +20,9 @@
     <string name="nbu_string">NBU: %1$s, %2$s</string>
     <string name="pb_string">PB: %1$s, %2$s</string>
 
+    <string name="base_help">The chart contains PrivatBank USD and EURO sale currencies for the last 30 days (It has little offset because API can\'t return data for last few days). </string>
+    <string name="string_reload">Reload</string>
+
     <!-- Strings related to Settings -->
 
     <!-- General settings -->

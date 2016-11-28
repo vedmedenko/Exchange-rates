@@ -28,6 +28,7 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
+import rx.Subscription;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import timber.log.Timber;
@@ -39,6 +40,7 @@ public class DateCurrencyService extends Service {
 
     private static TreeMap<String, Pair<Float, Float>> monthData;
 
+    private Subscription subscription;
     private CompositeSubscription compositeSubscription;
 
     public static Intent getStartIntent(@NonNull @ActivityContext Context context, @NonNull String date, boolean oneShot) {
@@ -64,6 +66,9 @@ public class DateCurrencyService extends Service {
         if (compositeSubscription != null)
             compositeSubscription.unsubscribe();
 
+        if (subscription != null)
+            subscription.unsubscribe();
+
         monthData.clear();
         monthData = null;
     }
@@ -84,7 +89,10 @@ public class DateCurrencyService extends Service {
             return START_NOT_STICKY;
 
         if (oneShot) {
-            compositeSubscription.add(dataManager.loadDateRates(date)
+            Intent broadcast = new Intent(ConstantsManager.BROADCAST);
+            broadcast.putExtra(ConstantsManager.EXTRA_TYPE, "Date");
+
+            subscription = dataManager.loadDateRates(date)
                     .subscribeOn(Schedulers.io())
                     .doAfterTerminate(() -> {
                     })
@@ -114,15 +122,15 @@ public class DateCurrencyService extends Service {
                             }
                         }
 
-                        Intent broadcast = new Intent(ConstantsManager.BROADCAST);
-                        broadcast.putExtra(ConstantsManager.EXTRA_TYPE, "Date");
                         broadcast.putStringArrayListExtra(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_EUR, eur);
                         broadcast.putStringArrayListExtra(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_RUR, rur);
                         broadcast.putStringArrayListExtra(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_USD, usd);
                         sendBroadcast(broadcast);
                     }, throwable -> {
                         Timber.e(throwable, "Error while loading data occurred!");
-                    }));
+                        broadcast.putExtra(ConstantsManager.EXTRA_BOOLEAN, true);
+                        sendBroadcast(broadcast);
+                    });
         } else {
 
             if (monthData == null) {
@@ -153,6 +161,9 @@ public class DateCurrencyService extends Service {
                 });
 
             }
+
+            Intent broadcast = new Intent(ConstantsManager.BROADCAST);
+            broadcast.putExtra(ConstantsManager.EXTRA_TYPE, "DateNotOneShot");
 
             compositeSubscription.add(dataManager.loadDateRates(date)
                     .subscribeOn(Schedulers.io())
@@ -197,8 +208,6 @@ public class DateCurrencyService extends Service {
                                 }
                             }
 
-                            Intent broadcast = new Intent(ConstantsManager.BROADCAST);
-                            broadcast.putExtra(ConstantsManager.EXTRA_TYPE, "DateNotOneShot");
                             broadcast.putStringArrayListExtra(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_EUR, eur);
                             broadcast.putStringArrayListExtra(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_USD, usd);
                             sendBroadcast(broadcast);
@@ -209,6 +218,8 @@ public class DateCurrencyService extends Service {
 
                     }, throwable -> {
                         Timber.e(throwable, "Error while loading data occurred!");
+                        broadcast.putExtra(ConstantsManager.EXTRA_BOOLEAN, true);
+                        sendBroadcast(broadcast);
                     }));
         }
 

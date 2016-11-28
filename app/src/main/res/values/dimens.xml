@@ -8,4 +8,11 @@
 
     <dimen name="curr_rates_vertical_margin">30dp</dimen>
 
+    <dimen name="fragment_paddind">15dp</dimen>
+    <dimen name="fragment_vertical_margin">10dp</dimen>
+    <dimen name="card_vertical_margin">5dp</dimen>
+
+    <dimen name="text_view_padding">10dp</dimen>
+    <dimen name="text_view_elevation">2dp</dimen>
+
 </resources>

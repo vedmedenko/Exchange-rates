@@ -3,12 +3,49 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp">
+    android:padding="@dimen/fragment_paddind">
 
         <com.vedmedenko.exchangerates.ui.views.CustomBarChart
             android:id="@+id/bar_chart"
             android:layout_width="match_parent"
-            android:layout_height="300dp"/>
+            android:layout_height="300dp"
+            android:visibility="gone"/>
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bar_chart"
+            android:layout_marginTop="@dimen/fragment_vertical_margin">
+
+                <TextView
+                    android:id="@+id/tv_label_help"
+                    android:text="@string/base_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/card_vertical_margin"
+                    android:layout_marginBottom="@dimen/card_vertical_margin"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:padding="5dp"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_button_reload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_help"
+            android:layout_marginTop="@dimen/fragment_vertical_margin">
+
+                <TextView
+                    style="@style/TextViewMaterialMediumBold"
+                    android:text="@string/string_reload"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_click_request"
+                    android:textAlignment="center"/>
+
+        </android.support.v7.widget.CardView>
 
 </RelativeLayout>

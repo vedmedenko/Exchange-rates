@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -44,6 +46,12 @@ public class ChartsFragment extends BaseFragment {
 
     @BindView(R.id.bar_chart)
     CustomBarChart barChart;
+
+    @BindView(R.id.tv_label_help)
+    TextView tvHelp;
+
+    @BindView(R.id.card_button_reload)
+    CardView btnReload;
 
     private static final float GROUP_SPACE = 0.4f;
     private static final float BAR_SPACE = 0f;
@@ -96,6 +104,19 @@ public class ChartsFragment extends BaseFragment {
 
         formatChart();
 
+        btnReload.setOnClickListener((view -> {
+            dataLoaded = false;
+
+            for (int i = 0; i < ChartsFragment.DAY_COUNT; i++) {
+                Calendar cal = new GregorianCalendar();
+                cal.setTime(new Date());
+                cal.add(Calendar.DAY_OF_MONTH, (-i -ChartsFragment.DAY_OFFSET));
+                String date = new SimpleDateFormat("dd.MM.yyyy", Locale.US).format(cal.getTime());
+                dates[i] = date;
+                ((MainActivity) getContext()).getPresenter().loadChartData(date);
+            }
+        }));
+
         return fragmentView;
     }
 
@@ -105,6 +126,9 @@ public class ChartsFragment extends BaseFragment {
 
         if (dataLoaded) {
             showChart();
+            tvHelp.setText(getString(R.string.base_help));
+        } else {
+            showError();
         }
     }
 
@@ -174,6 +198,13 @@ public class ChartsFragment extends BaseFragment {
         barChart.setData(data);
         barChart.groupBars(- BAR_WIDTH - (GROUP_SPACE / 2), GROUP_SPACE, BAR_SPACE);
         barChart.invalidate();
+
+        barChart.setVisibility(View.VISIBLE);
+    }
+
+    public void showError() {
+        barChart.setVisibility(View.GONE);
+        tvHelp.setText(getString(R.string.error_no_internet));
     }
 
     public void setChartData(@NonNull ArrayList<String> eur, @NonNull ArrayList<String> usd) {

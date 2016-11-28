@@ -127,6 +127,20 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         ((ChartsFragment) fragmentAdapter.getFragment(2)).setChartData(eur, usd);
     }
 
+    @Override
+    public void showError(int page) {
+        switch (page) {
+            case 0:
+                return;
+            case 1:
+                ((DateRatesFragment) fragmentAdapter.getFragment(1)).showHint(R.string.error_no_internet);
+                return;
+            case 2:
+                ((ChartsFragment) fragmentAdapter.getFragment(2)).showError();
+            default:
+        }
+    }
+
     public MainPresenter getPresenter() {
         return presenter;
     }

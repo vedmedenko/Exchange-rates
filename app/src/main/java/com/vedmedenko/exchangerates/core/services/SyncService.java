@@ -30,8 +30,6 @@ public class SyncService extends Service {
     @Inject
     DataManager dataManager;
 
-    private static int count = 0;
-
     private Subscription subscription;
 
     public static Intent getStartIntent(@NonNull @ActivityContext Context context, boolean returnData, boolean alarm) {
@@ -68,15 +66,14 @@ public class SyncService extends Service {
         final boolean returnData = extras.getBoolean(ConstantsManager.EXTRA_BOOLEAN);
         final boolean alarm = extras.getBoolean(ConstantsManager.EXTRA_BOOLEAN_ALARM);
 
-        Timber.d("Service fired: " + (++count));
-
         if (alarm)
             Timber.d("Service fired from alarm!");
 
         if (!dataManager.currentCurrencyLoaded() && !AlarmUtils.isRepeatingAlarmSet())
             AlarmUtils.setupRepeatingAlarm(this);
 
-        //Toast.makeText(this, R.string.sync_hint, Toast.LENGTH_LONG).show();
+        Intent broadcast = new Intent(ConstantsManager.BROADCAST);
+        broadcast.putExtra(ConstantsManager.EXTRA_TYPE, "Current");
 
         subscription = dataManager.loadCurrentRates()
                 .subscribeOn(Schedulers.io())
@@ -93,8 +90,6 @@ public class SyncService extends Service {
                     }
 
                     if (returnData) {
-                        Intent broadcast = new Intent(ConstantsManager.BROADCAST);
-                        broadcast.putExtra(ConstantsManager.EXTRA_TYPE, "Current");
                         sendBroadcast(broadcast);
                     }
 
@@ -102,6 +97,8 @@ public class SyncService extends Service {
                     AlarmUtils.cancelRepeatingAlarm(this);
                 }, throwable -> {
                     Timber.e(throwable, "Error while loading data occurred!");
+                    broadcast.putExtra(ConstantsManager.EXTRA_BOOLEAN, true);
+                    sendBroadcast(broadcast);
                 });
 
         return START_STICKY;

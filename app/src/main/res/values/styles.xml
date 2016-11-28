@@ -4,4 +4,22 @@
 
     </style>
 
+    <style name="TextViewMaterial">
+
+        <item name="android:padding">@dimen/text_view_padding</item>
+
+    </style>
+
+    <style name="TextViewMaterialMedium" parent="TextViewMaterial">
+
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+
+    </style>
+
+    <style name="TextViewMaterialMediumBold" parent="TextViewMaterialMedium">
+
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
 </resources>

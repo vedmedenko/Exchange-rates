@@ -76,6 +76,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                 Bundle extras = intent.getExtras();
 
                 String type = extras.getString(ConstantsManager.EXTRA_TYPE);
+                final boolean error = extras.getBoolean(ConstantsManager.EXTRA_BOOLEAN);
 
                 if (type == null)
                     return;
@@ -83,29 +84,41 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
 
                 switch (type) {
                     case "Current":
-                        getMvpView().refreshPage(0);
+                        if (error) {
+                            getMvpView().showError(0);
+                        } else {
+                            getMvpView().refreshPage(0);
+                        }
                         return;
                     case "Date":
-                        eur = extras.
-                                getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_EUR);
-                        ArrayList<String> rur = extras.
-                                getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_RUR);
-                        usd = extras.
-                                getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_USD);
+                        if (error) {
+                            getMvpView().showError(1);
+                        } else {
+                            eur = extras.
+                                    getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_EUR);
+                            ArrayList<String> rur = extras.
+                                    getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_RUR);
+                            usd = extras.
+                                    getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_USD);
 
-                        getMvpView().setDateCurrencies(eur, rur, usd);
+                            getMvpView().setDateCurrencies(eur, rur, usd);
 
-                        getMvpView().refreshPage(1);
+                            getMvpView().refreshPage(1);
+                        }
                         return;
                     case "DateNotOneShot":
-                        eur = extras.
-                                getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_EUR);
-                        usd = extras.
-                                getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_USD);
+                        if (error) {
+                            getMvpView().showError(2);
+                        } else {
+                            eur = extras.
+                                    getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_EUR);
+                            usd = extras.
+                                    getStringArrayList(ConstantsManager.EXTRA_ARRAYLIST_DATE_RATES_USD);
 
-                        getMvpView().setChartData(eur, usd);
+                            getMvpView().setChartData(eur, usd);
 
-                        getMvpView().refreshPage(2);
+                            getMvpView().refreshPage(2);
+                        }
                     default:
                 }
             }

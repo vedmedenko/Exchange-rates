@@ -12,4 +12,5 @@ public interface MainMvpView extends MvpView {
                            @NonNull ArrayList<String> rur,
                            @NonNull ArrayList<String> usd);
     void setChartData(@NonNull ArrayList<String> eur, @NonNull ArrayList<String> usd);
+    void showError(int page);
 }
