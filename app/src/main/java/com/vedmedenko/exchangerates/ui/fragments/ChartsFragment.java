@@ -1,14 +1,17 @@
 package com.vedmedenko.exchangerates.ui.fragments;
 
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -32,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -44,6 +48,9 @@ import timber.log.Timber;
 
 public class ChartsFragment extends BaseFragment {
 
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+
     @BindView(R.id.bar_chart)
     CustomBarChart barChart;
 
@@ -52,6 +59,9 @@ public class ChartsFragment extends BaseFragment {
 
     @BindView(R.id.card_button_reload)
     CardView btnReload;
+
+    @BindView(R.id.card_help)
+    CardView cardHelp;
 
     private static final float GROUP_SPACE = 0.4f;
     private static final float BAR_SPACE = 0f;
@@ -63,17 +73,21 @@ public class ChartsFragment extends BaseFragment {
 
     private static final float TEXT_SIZE = 16f;
     private static final float TEXT_VALUE_SIZE = 12f;
-    private static final float TEXT_SIZE_AXIS_X = 10f;
+    private static float TEXT_SIZE_AXIS_X = 10f;
 
     public static final int DAY_COUNT = 30;
-    private static final int DAY_OFFSET = 4; // API can't return data for the days that is close to today.
+    public static final int DAY_OFFSET = 5; // API can't return data for the days that is close to today.
 
     private String[] dates = new String[DAY_COUNT];
 
     private Float[] dataEur = new Float[DAY_COUNT];
     private Float[] dataUsd = new Float[DAY_COUNT];
 
-    private boolean dataLoaded;
+    private enum STATE {
+        LOADED, LOADING, ERROR
+    }
+
+    private STATE state;
 
     public static ChartsFragment newInstance() {
         return new ChartsFragment();
@@ -83,16 +97,31 @@ public class ChartsFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dataLoaded = false;
+        state = STATE.LOADING;
+
+        Calendar cal = new GregorianCalendar();
 
         for (int i = 0; i < ChartsFragment.DAY_COUNT; i++) {
-            Calendar cal = new GregorianCalendar();
             cal.setTime(new Date());
             cal.add(Calendar.DAY_OF_MONTH, (-i -ChartsFragment.DAY_OFFSET));
             String date = new SimpleDateFormat("dd.MM.yyyy", Locale.US).format(cal.getTime());
             dates[i] = date;
-            ((MainActivity) getContext()).getPresenter().loadChartData(date);
         }
+
+        cal.setTime(new Date());
+        cal.add(Calendar.DAY_OF_MONTH, -ChartsFragment.DAY_OFFSET);
+        String date = new SimpleDateFormat("dd.MM.yyyy", Locale.US).format(cal.getTime());
+        ((MainActivity) getContext()).getPresenter().loadChartData(date);
+
+        checkTextSize();
+    }
+
+    private void checkTextSize() {
+        Display display = ((MainActivity) getContext()).getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        if (size.x <= 480)
+            TEXT_SIZE_AXIS_X = 6f;
     }
 
     @Override
@@ -105,16 +134,24 @@ public class ChartsFragment extends BaseFragment {
         formatChart();
 
         btnReload.setOnClickListener((view -> {
-            dataLoaded = false;
+            state = STATE.LOADING;
+            DateCurrencyService.clearData();
+
+            Calendar cal = new GregorianCalendar();
 
             for (int i = 0; i < ChartsFragment.DAY_COUNT; i++) {
-                Calendar cal = new GregorianCalendar();
                 cal.setTime(new Date());
                 cal.add(Calendar.DAY_OF_MONTH, (-i -ChartsFragment.DAY_OFFSET));
                 String date = new SimpleDateFormat("dd.MM.yyyy", Locale.US).format(cal.getTime());
                 dates[i] = date;
-                ((MainActivity) getContext()).getPresenter().loadChartData(date);
             }
+
+            cal.setTime(new Date());
+            cal.add(Calendar.DAY_OF_MONTH, -ChartsFragment.DAY_OFFSET);
+            String date = new SimpleDateFormat("dd.MM.yyyy", Locale.US).format(cal.getTime());
+            ((MainActivity) getContext()).getPresenter().loadChartData(date);
+
+            showProgress();
         }));
 
         return fragmentView;
@@ -123,13 +160,7 @@ public class ChartsFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        if (dataLoaded) {
-            showChart();
-            tvHelp.setText(getString(R.string.base_help));
-        } else {
-            showError();
-        }
+        modifyUI();
     }
 
     private void formatChart() {
@@ -200,11 +231,40 @@ public class ChartsFragment extends BaseFragment {
         barChart.invalidate();
 
         barChart.setVisibility(View.VISIBLE);
+        cardHelp.setVisibility(View.GONE);
+        tvHelp.setText(getString(R.string.base_help));
+        progressBar.setVisibility(View.GONE);
+        btnReload.setVisibility(View.VISIBLE);
     }
 
     public void showError() {
         barChart.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        cardHelp.setVisibility(View.VISIBLE);
+        btnReload.setVisibility(View.VISIBLE);
         tvHelp.setText(getString(R.string.error_no_internet));
+        state = STATE.ERROR;
+    }
+
+    public void showProgress() {
+        barChart.setVisibility(View.GONE);
+        cardHelp.setVisibility(View.GONE);
+        btnReload.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        state = STATE.LOADING;
+    }
+
+    private void modifyUI() {
+        switch (state) {
+            case LOADING:
+                showProgress();
+                return;
+            case LOADED:
+                showChart();
+                return;
+            case ERROR:
+                showError();
+        }
     }
 
     public void setChartData(@NonNull ArrayList<String> eur, @NonNull ArrayList<String> usd) {
@@ -213,7 +273,7 @@ public class ChartsFragment extends BaseFragment {
             dataUsd[i] = Float.valueOf(usd.get(i));
         }
 
-        dataLoaded = true;
+        state = STATE.LOADED;
     }
 
 }

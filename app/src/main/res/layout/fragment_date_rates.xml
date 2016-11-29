@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_click_request"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:gravity="center_horizontal"/>
 
     </android.support.v7.widget.CardView>
 
@@ -40,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/card_vertical_margin"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
             <TextView
@@ -50,6 +52,7 @@
                 android:layout_marginTop="@dimen/card_vertical_margin"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
             <TextView
@@ -61,6 +64,7 @@
                 android:layout_marginBottom="@dimen/card_vertical_margin"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
         </RelativeLayout>
@@ -85,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/card_vertical_margin"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
             <TextView
@@ -95,6 +100,7 @@
                 android:layout_marginTop="@dimen/card_vertical_margin"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
             <TextView
@@ -106,6 +112,7 @@
                 android:layout_marginBottom="@dimen/card_vertical_margin"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
         </RelativeLayout>

@@ -1,51 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/fragment_paddind">
 
-        <com.vedmedenko.exchangerates.ui.views.CustomBarChart
-            android:id="@+id/bar_chart"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:visibility="gone"/>
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_help"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/bar_chart"
-            android:layout_marginTop="@dimen/fragment_vertical_margin">
+                <com.vedmedenko.exchangerates.ui.views.CustomBarChart
+                    android:id="@+id/bar_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:visibility="gone"/>
 
-                <TextView
-                    android:id="@+id/tv_label_help"
-                    android:text="@string/base_help"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_help"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/card_vertical_margin"
-                    android:layout_marginBottom="@dimen/card_vertical_margin"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:padding="5dp"/>
+                    android:layout_below="@id/bar_chart"
+                    android:layout_marginTop="@dimen/fragment_vertical_margin">
 
-        </android.support.v7.widget.CardView>
+                        <TextView
+                            android:id="@+id/tv_label_help"
+                            android:text="@string/base_help"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/card_vertical_margin"
+                            android:layout_marginBottom="@dimen/card_vertical_margin"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp"/>
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_button_reload"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_help"
-            android:layout_marginTop="@dimen/fragment_vertical_margin">
+                </android.support.v7.widget.CardView>
 
-                <TextView
-                    style="@style/TextViewMaterialMediumBold"
-                    android:text="@string/string_reload"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_button_reload"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_click_request"
-                    android:textAlignment="center"/>
+                    android:layout_below="@id/card_help"
+                    android:layout_marginTop="@dimen/fragment_vertical_margin">
 
-        </android.support.v7.widget.CardView>
+                        <TextView
+                            style="@style/TextViewMaterialMediumBold"
+                            android:text="@string/string_reload"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_click_request"
+                            android:textAlignment="center"
+                            android:gravity="center_horizontal"/>
 
-</RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/card_help"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="@dimen/fragment_vertical_margin"/>
+
+        </RelativeLayout>
+
+</ScrollView>

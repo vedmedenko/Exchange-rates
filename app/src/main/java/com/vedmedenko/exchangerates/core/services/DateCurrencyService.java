@@ -13,6 +13,7 @@ import com.vedmedenko.exchangerates.ExchangeRatesApplication;
 import com.vedmedenko.exchangerates.core.DataManager;
 import com.vedmedenko.exchangerates.core.rest.models.date.DateRate;
 import com.vedmedenko.exchangerates.injection.ActivityContext;
+import com.vedmedenko.exchangerates.ui.activities.MainActivity;
 import com.vedmedenko.exchangerates.ui.fragments.ChartsFragment;
 import com.vedmedenko.exchangerates.utils.ConstantsManager;
 
@@ -20,8 +21,10 @@ import java.lang.ref.WeakReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeMap;
@@ -40,6 +43,8 @@ public class DateCurrencyService extends Service {
 
     private static TreeMap<String, Pair<Float, Float>> monthData;
 
+    private static int offset;
+
     private Subscription subscription;
     private CompositeSubscription compositeSubscription;
 
@@ -50,6 +55,12 @@ public class DateCurrencyService extends Service {
         extras.putBoolean(ConstantsManager.EXTRA_BOOLEAN, oneShot);
         intent.putExtras(extras);
         return intent;
+    }
+
+    public static void clearData() {
+        if (monthData != null)
+            monthData.clear();
+        offset = 1;
     }
 
     @Override
@@ -199,7 +210,6 @@ public class DateCurrencyService extends Service {
                                 Pair pair = monthData.get(key);
 
                                 if (pair == null) {
-                                    Timber.d(key);
                                     usd.add("0.0f");
                                     eur.add("0.0f");
                                 } else {
@@ -213,7 +223,15 @@ public class DateCurrencyService extends Service {
                             sendBroadcast(broadcast);
 
                             monthData.clear();
+                            offset = 1;
                             monthData = null;
+                        } else {
+                            Calendar cal = new GregorianCalendar();
+                            cal.setTime(new Date());
+                            cal.add(Calendar.DAY_OF_MONTH,  (-offset -ChartsFragment.DAY_OFFSET));
+                            offset = offset + 1;
+                            String newDate = new SimpleDateFormat("dd.MM.yyyy", Locale.US).format(cal.getTime());
+                            startService(DateCurrencyService.getStartIntent(this, newDate, false));
                         }
 
                     }, throwable -> {
